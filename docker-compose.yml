@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  custom_nginx:
+    image: nginx:1.17.8-alpine
+    links:
+      - custom_php74
+    ports:
+      - "8822:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/my_own_site.com.conf:/etc/nginx/conf.d/my_own_site.com.conf
+
+  custom_php74:
+    image: php:7.4.0-fpm-alpine
+    volumes:
+      - ./public:/app
+    ports:
+      - "9000"
+
+  custom_php72:
+    image: php:7.2.0-fpm-alpine
+    volumes:
+      - ./public:/app
+    ports:
+      - "9000"
